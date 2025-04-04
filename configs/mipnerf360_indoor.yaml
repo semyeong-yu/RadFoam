@@ -1,0 +1,61 @@
+# Model Parameters
+sh_degree: 3
+init_points: 131_072
+final_points: 2_097_152
+activation_scale: 1
+device: cuda
+num_pt: 5                             # the number of sparse points for deblur DSKnet()
+kernel_hwindow: 10
+kernel_random_hwindow: 0.15
+kernel_rand_embed: 2
+kernel_random_mode: input
+kernel_img_embed: 32
+kernel_spatial_embed: 2
+kernel_depth_embed: 0
+kernel_num_hidden: 4
+kernel_num_wide: 64
+kernel_shortcut: True
+kernel_pattern_init_radius: 0.1
+kernel_isglobal: False
+kernel_global_trans: True
+kernel_spatialvariant_trans: True
+tone_mapping_type: gamma
+kernel_start_iter: 120
+align_start_iter: 0
+align_end_iter: 18_000
+kernel_lr_init: 5e-5
+kernel_lr_final: 1e-6
+kernel_lr_decay: 250
+
+# Pipeline Parameters
+iterations: 20_000
+densify_from: 500 # 2_000
+densify_until: 11_000
+densify_factor: 1.15
+white_background: true
+quantile_weight: 1e-4
+viewer: false                          # Flag to use viewer
+debug: false                           # Flag to not use tensorboard
+align_weight: 1e-2 # 1e-1 @ deblurnerf defocuscupcake config
+
+# Optimization Parameters
+points_lr_init: 1e-4 #2e-4
+points_lr_final: 5e-6
+density_lr_init: 5e-2 #1e-1
+density_lr_final: 1e-2
+attributes_lr_init: 2.5e-3 #5e-3
+attributes_lr_final: 5e-4
+sh_factor: 0.1
+freeze_points: 18_000                  # Points are frozen after this cycle
+
+# Dataset Parameters
+dataset: "colmap"
+data_path: "deblur_dataset/real_defocus_blur"
+scene: "defocuscupcake"
+# data_path: "data/mipnerf360"
+# scene: "bicycle"
+patch_based: false
+downsample: [4, 1]                      # Image downsample factors
+downsample_iterations: [0, 5_000]
+# downsample: [4, 2, 1]
+# downsample_iterations: [0, 150, 500]

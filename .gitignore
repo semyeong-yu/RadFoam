@@ -1,0 +1,14 @@
+.vscode
+/build*/
+/dist/
+/data
+/deblur_dataset
+/radfoam/
+/checkpoints_v1
+/*output*
+
+*.egg-info
+__pycache__
+/*nsight
+*.mp4b
+*ipynb

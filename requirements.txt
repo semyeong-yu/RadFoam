@@ -1,0 +1,15 @@
+cmake==3.29.2
+cmake-format==0.6.13
+cmake_build_extension==0.6.1
+ConfigArgParse==1.7
+einops==0.8.1
+glfw==2.6.5
+pycolmap==3.11.1
+opencv-python==4.11.0.86
+pillow==11.0.0
+plyfile==1.0.3
+pybind11[global]==2.13.6
+pyyaml==6.0.2
+scipy==1.15.1
+tensorboard==2.19.0
+tqdm==4.67.1
