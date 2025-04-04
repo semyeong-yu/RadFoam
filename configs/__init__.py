@@ -42,7 +42,7 @@ class PipelineParams(ParamGroup):
 
     def __init__(self, parser):
         self.iterations = 20_000
-        self.densify_from = 2_000
+        self.densify_from = 500 # 2_000
         self.densify_until = 11_000
         self.densify_factor = 1.15
         self.white_background = True

@@ -60,6 +60,7 @@ Place the [Mip-NeRF 360](https://jonbarron.info/mipnerf360) and [Deep Blending](
 Training can then be launched with:
 
     python train.py -c configs/<config_file>.yaml
+    # python train.py -c configs/mipnerf360_indoor.yaml
 
 Where `<config_file>` is either one of the supplied files in the `configs` directory or your own.
 You can optionally include the `--viewer` flag to train interactively, or use the `viewer.py` script to view saved checkpoints.
