@@ -355,9 +355,9 @@ def train(args, pipeline_args, model_args, optimizer_args, dataset_args):
                     align_loss = torch.tensor(0.0, device=color_loss.device) # modified
                 
                 if i >= model_args.align_start_iter and i < model_args.align_end_iter:
-                    loss = color_loss.mean() + 0.5 * opacity_loss + w_depth * quant_loss + pipeline_args.align_weight * align_loss
+                    loss = color_loss.mean() + opacity_loss + w_depth * quant_loss + pipeline_args.align_weight * align_loss
                 else:
-                    loss = color_loss.mean() + 0.5 * opacity_loss + w_depth * quant_loss
+                    loss = color_loss.mean() + opacity_loss + w_depth * quant_loss
 
                 model.optimizer.zero_grad(set_to_none=True)
                 optimizer_dsk.zero_grad()
@@ -418,7 +418,7 @@ def train(args, pipeline_args, model_args, optimizer_args, dataset_args):
 
                 if not pipeline_args.debug:
                     writer.add_scalar("train/rgb_loss", color_loss.mean().item(), i)
-                    writer.add_scalar("train/opacity_loss", 0.5* opacity_loss.item(), i)
+                    writer.add_scalar("train/opacity_loss", opacity_loss.item(), i)
                     writer.add_scalar("train/quant_loss", w_depth * quant_loss.item(), i)
                     writer.add_scalar("train/align_loss", pipeline_args.align_weight * align_loss.item(), i)
                     writer.add_scalar("train/gradient_norm", total_norm.item(), i)
@@ -445,13 +445,13 @@ def train(args, pipeline_args, model_args, optimizer_args, dataset_args):
                     writer.add_scalar("test/psnr", test_psnr, i)
 
                     writer.add_scalar(
-                        "lr/points_lr", model.xyz_scheduler_args(i, model.primal_points.shape[0]), i
+                        "lr/points_lr", model.xyz_scheduler_args(i), i
                     )
                     writer.add_scalar(
-                        "lr/density_lr", model.den_scheduler_args(i, model.primal_points.shape[0]), i
+                        "lr/density_lr", model.den_scheduler_args(i), i
                     )
                     writer.add_scalar(
-                        "lr/attr_lr", model.attr_dc_scheduler_args(i, model.primal_points.shape[0]), i
+                        "lr/attr_lr", model.attr_dc_scheduler_args(i), i
                     )
                     writer.add_scalar(
                         "lr/deblur_dsk_lr", optimizer_dsk.param_groups[0]['lr'], i
