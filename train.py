@@ -134,15 +134,12 @@ def train(args, pipeline_args, model_args, optimizer_args, dataset_args):
         total_step = pipeline_args.iterations
         init_lr = model_args.kernel_lr_init
         final_lr = model_args.kernel_lr_final
-        # scale = 1.0
-        # if curr_num_points > init_num_points:
-        #     scale = init_num_points / curr_num_points
         if step < warmup_step:
-            return float(step) / float(max(1, warmup_step)) # return scale * float(step) / float(max(1, warmup_step))                
+            return float(step) / float(max(1, warmup_step))                
         else:
             progress = (step - warmup_step) / float(max(1, total_step - warmup_step))
             cosine_decay = 0.5 * (1 + np.cos(np.pi * progress))
-            return final_lr / init_lr + (1 - final_lr / init_lr) * cosine_decay # return scale * final_lr / init_lr + (1 - final_lr / init_lr) * cosine_decay
+            return final_lr / init_lr + (1 - final_lr / init_lr) * cosine_decay
 
     scheduler_dsk = torch.optim.lr_scheduler.LambdaLR(optimizer_dsk, lr_lambda=lr_lambda)
 
@@ -405,7 +402,8 @@ def train(args, pipeline_args, model_args, optimizer_args, dataset_args):
 
                 # radiant foam model
                 model.optimizer.step()
-                model.update_learning_rate(i, model.primal_points.shape[0])
+                model.update_learning_rate(i)
+                # model.update_learning_rate(i, model.primal_points.shape[0])
 
                 # deblur MLP module
                 optimizer_dsk.step()

@@ -70,20 +70,19 @@ def get_cosine_lr_func(
     :return HoF which takes step as input
     """
 
-    def helper(step, curr_num_points):
-        scale = 1.0
-        if curr_num_points > init_num_points:
-            scale = init_num_points / curr_num_points
-        scale = max(scale, 1e-3)
-
+    def helper(step):
+        # scale = 1.0
+        # if curr_num_points > init_num_points:
+        #     scale = init_num_points / curr_num_points
+        # scale = max(scale, 1e-3)
         if warmup_steps and step < warmup_steps:
-            return scale * lr_init * step / warmup_steps
+            return lr_init * step / warmup_steps
         elif step > max_steps:
             return 0.0
         lr_cos = lr_final + 0.5 * (lr_init - lr_final) * (
             1
             + np.cos(np.pi * (step - warmup_steps) / (max_steps - warmup_steps))
         )
-        return scale * lr_cos
+        return lr_cos
 
     return helper

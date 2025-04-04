@@ -327,21 +327,21 @@ class RadFoamScene(torch.nn.Module):
             init_num_points=init_num_points
         )
 
-    def update_learning_rate(self, iteration, curr_num_points):
+    def update_learning_rate(self, iteration):
         """Learning rate scheduling per step"""
         for param_group in self.optimizer.param_groups:
             if param_group["name"] == "primal_points":
-                lr = self.xyz_scheduler_args(iteration, curr_num_points)
+                lr = self.xyz_scheduler_args(iteration)
                 param_group["lr"] = lr
             elif param_group["name"] == "density":
-                lr = self.den_scheduler_args(iteration, curr_num_points)
+                lr = self.den_scheduler_args(iteration)
                 param_group["lr"] = lr
                 param_group["lr"] = lr
             elif param_group["name"] == "att_dc":
-                lr = self.attr_dc_scheduler_args(iteration, curr_num_points)
+                lr = self.attr_dc_scheduler_args(iteration)
                 param_group["lr"] = lr
             elif param_group["name"] == "att_sh":
-                lr = self.attr_rest_scheduler_args(iteration, curr_num_points)
+                lr = self.attr_rest_scheduler_args(iteration)
                 param_group["lr"] = lr
 
     def prune_optimizer(self, mask):
